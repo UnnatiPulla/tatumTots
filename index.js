@@ -41,14 +41,17 @@ const app = {
         const item = this.renderListItem(flick);
         this.list.insertBefore(item, this.list.firstElementChild);
         //inserting the item before the first child 
+        //console.log(this.flicks)
 
         const delButton = item.querySelector(".actions").querySelector(".alert");
-        delButton.addEventListener("click",function(){
-            for(var i=0; i<this.max; i++){
+        delButton.addEventListener("click", ev =>{
+            console.log(this.max)
+            for(var i=0; i<this.flicks.length; i++){
                 if(this.flicks[i].id === flick.id){
                    this.flicks.splice(i,1);
                 }
             }
+            
                 delButton.parentNode.parentNode.remove();     
         });
 
@@ -65,8 +68,60 @@ const app = {
             }
         });
 
+        const moveUpButton = item.querySelector(".actions").querySelector(".secondary");
+        moveUpButton.addEventListener("click", ev =>{
+           
+            for(var i=0; i<this.flicks.length; i++){
+                if(this.flicks[i].id === flick.id){
+                    //console.log(this.flicks[i].id);
+                    const newFlick = Object.assign({}, this.flicks[i]);
+                    //console.log(this.flicks.indexOf(this.flicks[i]));
+                    this.flicks[i]=this.flicks[i-1];
+                    this.flicks[i-1]=newFlick;
+                }
+
+            }
+            this.reBuildList();
+            
+            //const top = item.previousSibling;
+            //item.parentNode.replaceChild(item.previousSibling,item);
+        });
+
+        const moveDownButton = item.querySelector(".actions").querySelector(".primary");
+        moveDownButton.addEventListener("click", ev =>{
+            
+            for(var j=0; j<this.flicks.length; j++){
+                if(this.flicks[j].id === flick.id){
+                    console.log(this.flicks[j].id);
+                    const newFlick2 = Object.assign({}, this.flicks[j]);
+                    //console.log(this.flicks.indexOf(this.flicks[i]));
+                    this.flicks[j]=this.flicks[j+1];
+                    this.flicks[j+1]=newFlick2;
+                    break;
+                }
+
+            }
+            this.reBuildList();
+        });
+         
+
         f.reset();
     },
+
+    reBuildList: function(){
+        while (app.list.firstChild) {
+            app.list.removeChild(app.list.firstChild);
+        }
+        
+       for(var i=0;i<this.flicks.length; i++){
+            //console.log(i);
+            const item = this.renderListItem(this.flicks[i]);
+          //  this.list.insertBefore(item, this.list.firstElementChild);
+          this.list.append(item);
+        }
+       
+    }
+
 }
 //order in an object doesnt matter. all are created at the same time 
 
