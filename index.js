@@ -21,7 +21,14 @@ const app = {
             .querySelector(".flickName")
             .textContent = flick.name;
 
+        item.querySelector(".delete.button").addEventListener("click", this.deleteFlick.bind(this, item));
+
         return item;
+    },
+//here, event target is button. "this" is the button in this case in this msthod
+    deleteFlick(item, ev){
+        item.remove();
+        
     },
 
     handleSubmit: function(ev){
@@ -43,17 +50,6 @@ const app = {
         //inserting the item before the first child 
         //console.log(this.flicks)
 
-        const delButton = item.querySelector(".actions").querySelector(".alert");
-        delButton.addEventListener("click", ev =>{
-            console.log(this.max)
-            for(var i=0; i<this.flicks.length; i++){
-                if(this.flicks[i].id === flick.id){
-                   this.flicks.splice(i,1);
-                }
-            }
-            
-                delButton.parentNode.parentNode.remove();     
-        });
 
         const favButton = item.querySelector(".actions").querySelector(".warning");
         favButton.addEventListener("click", function(){
