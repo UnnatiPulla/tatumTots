@@ -1,5 +1,5 @@
-const app = {
-    init: function(selectors){
+class App {
+    constructor(selectors){
         this.max = 0;
         this.flicks = []
         this.list = document.querySelector(selectors.listSelector)
@@ -11,9 +11,9 @@ const app = {
                 ev.preventDefault();
                 this.handleSubmit(ev)
             })
-    },
+    }
 
-    renderListItem: function(flick){
+    renderListItem(flick){
         const item = this.template.cloneNode(true);
         item.classList.remove("template");
         item.dataset.id = flick.id;
@@ -24,7 +24,7 @@ const app = {
         item.querySelector(".delete.button").addEventListener("click", this.deleteFlick.bind(this, item,flick));
 
         return item;
-    },
+    }
 //here, event target is button. "this" is the button in this case in this msthod
     deleteFlick(item, flick,  ev){
         //remove fom DOM
@@ -33,9 +33,9 @@ const app = {
         //remove form array
         const i = this.flicks.indexOf(flick);
         this.flicks.splice(i,1);
-    },
+    }
 
-    handleSubmit: function(ev){
+    handleSubmit(ev){
         ev.preventDefault();
         const f = ev.target; //entire form not just button
         const flick={
@@ -106,9 +106,9 @@ const app = {
          
 
         f.reset();
-    },
+    }
 
-    reBuildList: function(){
+    reBuildList(){
         while (app.list.firstChild) {
             app.list.removeChild(app.list.firstChild);
         }
@@ -125,9 +125,11 @@ const app = {
 }
 //order in an object doesnt matter. all are created at the same time 
 
-app.init({
+
+const app = new App({
     formSelector: "#flickForm",
     listSelector: "#flickList",
     templateSelector: ".flick.template",
-
 });
+
+//passing an object into teh construcotr
