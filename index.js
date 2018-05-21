@@ -21,14 +21,18 @@ const app = {
             .querySelector(".flickName")
             .textContent = flick.name;
 
-        item.querySelector(".delete.button").addEventListener("click", this.deleteFlick.bind(this, item));
+        item.querySelector(".delete.button").addEventListener("click", this.deleteFlick.bind(this, item,flick));
 
         return item;
     },
 //here, event target is button. "this" is the button in this case in this msthod
-    deleteFlick(item, ev){
+    deleteFlick(item, flick,  ev){
+        //remove fom DOM
         item.remove();
-        
+
+        //remove form array
+        const i = this.flicks.indexOf(flick);
+        this.flicks.splice(i,1);
     },
 
     handleSubmit: function(ev){
