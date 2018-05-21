@@ -16,3 +16,7 @@ main{
     display: none;
     
 }
+
+.flick.fav{
+    background-color: aquamarine;
+}

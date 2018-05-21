@@ -23,6 +23,8 @@ class App {
 
         item.querySelector(".delete.button").addEventListener("click", this.deleteFlick.bind(this, item,flick));
 
+        item.querySelector(".fav.button").addEventListener("click", this.favFlick.bind(this, item, flick));
+
         return item;
     }
 //here, event target is button. "this" is the button in this case in this msthod
@@ -33,6 +35,12 @@ class App {
         //remove form array
         const i = this.flicks.indexOf(flick);
         this.flicks.splice(i,1);
+    }
+
+    //_ represents that we are passing but not using it. it is sent in by default 
+
+    favFlick(item, flick, _ev){
+        flick.fav = item.classList.toggle('fav'); //toggle returns true/ false. when on, it returns true, otherwise it returns false. hence we change the prop of object using this!
     }
 
     handleSubmit(ev){
@@ -55,18 +63,7 @@ class App {
         //console.log(this.flicks)
 
 
-        const favButton = item.querySelector(".actions").querySelector(".warning");
-        favButton.addEventListener("click", function(){
-            flick.clickTimes = flick.clickTimes + 1;
-            if(flick.clickTimes%2!==0){
-                flick.fav = true;
-                favButton.textContent = "⭐️"
-            }
-            else{
-                flick.fav = false;
-                favButton.textContent = "fav";
-            }
-        });
+        
 
         const moveUpButton = item.querySelector(".actions").querySelector(".secondary");
         moveUpButton.addEventListener("click", ev =>{
@@ -133,3 +130,5 @@ const app = new App({
 });
 
 //passing an object into teh construcotr
+
+//javascript is pass-by-refernce. Hence any change made any where will change the object directly. arrays and functions are also objects.
